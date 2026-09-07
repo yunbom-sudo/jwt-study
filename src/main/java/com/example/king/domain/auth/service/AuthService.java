@@ -44,6 +44,7 @@ public class AuthService {
 
         return TokenResponse.builder()
                 .accessToken(accessToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
