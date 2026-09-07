@@ -1,6 +1,10 @@
 spring:
   application:
     name: king
+  data:
+    redis:
+      host: ${DATA_REDIS_HOST}
+      port: ${DATA_REDIS_PORT}
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
