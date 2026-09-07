@@ -7,10 +7,13 @@ import com.example.king.domain.auth.user.repository.UserRepository;
 import com.example.king.global.exception.BusinessException;
 import com.example.king.global.exception.ErrorCode;
 import com.example.king.global.jwt.JwtProvider;
+import com.example.king.global.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class AuthService {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RedisService redisService;
 
     @Transactional
     public TokenResponse Login(LoginRequest request){
@@ -32,11 +36,14 @@ public class AuthService {
         String accessToken = jwtProvider.createAccessToken(user);
         String refreshToken = jwtProvider.createRefreshToken(user);
 
-        user.updateRefreshToken(refreshToken);
+        redisService.saveRefreshToken(
+                user.getId(),
+                refreshToken,
+                Duration.ofDays(7)
+        );
 
         return TokenResponse.builder()
                 .accessToken(accessToken)
-                .refreshToken(refreshToken)
                 .build();
     }
 
