@@ -11,7 +11,7 @@ public record SignUpResponse(
     public SignUpResponse(User user){
         this(
                 user.getId(),
-                user.getUserName(),
+                user.getUsername(),
                 user.getRole()
         );
     }
