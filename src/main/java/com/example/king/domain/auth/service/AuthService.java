@@ -46,7 +46,4 @@ public class AuthService {
                 .accessToken(accessToken)
                 .build();
     }
-
-
-
 }
