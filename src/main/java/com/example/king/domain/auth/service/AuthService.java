@@ -47,4 +47,29 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    @Transactional(readOnly = true)
+    public TokenResponse reissue(String refreshToken){
+
+        if(!jwtProvider.validateToken(refreshToken)){
+            throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        Long userId = jwtProvider.getUserId(refreshToken);
+
+        String savedRefreshToken = redisService.getRefreshToken(userId);
+
+        if(savedRefreshToken==null || !savedRefreshToken.equals(refreshToken)){
+            throw new BusinessException(ErrorCode.INVALID_REFRESH_TOKEN);
+        }
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        String accessToken = jwtProvider.createAccessToken(user);
+
+        return TokenResponse.builder()
+                .accessToken(accessToken)
+                .build();
+    }
 }
