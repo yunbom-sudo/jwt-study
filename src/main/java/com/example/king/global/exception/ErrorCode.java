@@ -23,7 +23,7 @@ public enum ErrorCode {
 
     INVALID_REFRESH_TOKEN(
             HttpStatus.BAD_REQUEST,
-            "로그인 세션이 만료되었습니다."
+            "리프레시 토큰값이 잘못되었습니다."
     );
 
 
