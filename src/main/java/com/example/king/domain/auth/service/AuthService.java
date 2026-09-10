@@ -25,7 +25,7 @@ public class AuthService {
     private final RedisService redisService;
 
     @Transactional
-    public TokenResponse Login(LoginRequest request){
+    public TokenResponse login(LoginRequest request){
         User user = userRepository.findByUsername(request.username())
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
