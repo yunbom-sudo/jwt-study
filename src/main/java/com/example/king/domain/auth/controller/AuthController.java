@@ -26,7 +26,7 @@ public class AuthController {
             @RequestBody LoginRequest request,
             HttpServletResponse response
     ) {
-        TokenResponse tokenResponse = authService.Login(request);
+        TokenResponse tokenResponse = authService.login(request);
 
         ResponseCookie cookie = CookieUtil.createRefreshTokenCookie(
                 tokenResponse.getRefreshToken()
