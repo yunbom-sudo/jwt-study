@@ -19,7 +19,13 @@ public enum ErrorCode {
     INVALID_PASSWORD(
             HttpStatus.BAD_REQUEST,
             "비밀번호가 일치하지 않습니다."
+    ),
+
+    INVALID_REFRESH_TOKEN(
+            HttpStatus.BAD_REQUEST,
+            "로그인 세션이 만료되었습니다."
     );
+
 
     private final HttpStatus status;
     private final String message;
