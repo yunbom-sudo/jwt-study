@@ -23,7 +23,7 @@ public enum ErrorCode {
 
     INVALID_REFRESH_TOKEN(
             HttpStatus.BAD_REQUEST,
-            "리프레시 토큰값이 잘못되었습니다."
+            "유효하지 않은 Refresh Token입니다."
     );
 
 
